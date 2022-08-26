@@ -50,4 +50,10 @@ public class UserServiceImp implements UserService {
     public List<User> getAllUsers() {
         return userDao.getAllUsers();
     }
+
+    @Transactional(readOnly = true)
+    @Override
+    public User findUserByEmail(String email) {
+        return userDao.findUserByEmail(email);
+    }
 }

@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", ""})
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
@@ -14,12 +14,16 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    @Column(name = "username",
-            unique = true)
+    @Column(name = "username")
     private String username;
+    @Column(name = "surname")
+    private String surname;
+    @Column(name = "age")
+    private byte age;
     @Column(name = "password")
     private String password;
-    @Column(name = "email")
+    @Column(name = "email",
+            unique = true)
     private String email;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -31,8 +35,10 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String username, String password, String email, Collection<Role> roles) {
+    public User(String username, String surname, byte age, String password, String email, Collection<Role> roles) {
         this.username = username;
+        this.surname = surname;
+        this.age = age;
         this.password = password;
         this.email = email;
         this.roles = roles;
@@ -60,6 +66,22 @@ public class User implements UserDetails {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public byte getAge() {
+        return age;
+    }
+
+    public void setAge(byte age) {
+        this.age = age;
     }
 
     public Collection<Role> getRoles() {
@@ -105,5 +127,6 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
     //UserDetails impl [End]
 }

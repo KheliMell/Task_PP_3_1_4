@@ -19,8 +19,8 @@ public class UserDetailService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) {
-        User user = userService.findUserByUsername(username);
+    public UserDetails loadUserByUsername(String email) {
+        User user = userService.findUserByEmail(email);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return user;
     }

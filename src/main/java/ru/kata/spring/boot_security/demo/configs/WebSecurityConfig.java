@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import ru.kata.spring.boot_security.demo.services.UserDetailService;
 
 @Configuration
@@ -26,14 +27,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/", "/home").permitAll()
-                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/admin/**").hasAuthority("ADMIN")
                 .antMatchers("/user/**").authenticated()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().successHandler(successUserHandler)
+                .formLogin()
+                .loginPage("/login")
+                .usernameParameter("user_email")
+                .passwordParameter("user_password")
+                .successHandler(successUserHandler)
                 .permitAll()
                 .and()
                 .logout().logoutSuccessUrl("/")
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .permitAll();
     }
 

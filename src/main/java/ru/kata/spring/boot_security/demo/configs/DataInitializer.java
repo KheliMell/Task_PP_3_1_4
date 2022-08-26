@@ -21,19 +21,23 @@ public class DataInitializer {
 
     @PostConstruct
     private void init() {
-        Role roleAdmin = new Role("ROLE_ADMIN");
-        Role roleUser = new Role("ROLE_USER");
+        Role roleAdmin = new Role("ADMIN");
+        Role roleUser = new Role("USER");
         roleService.saveRole(roleAdmin);
         roleService.saveRole(roleUser);
 
         User user_admin = new User(
                 "admin",
                 "admin",
+                (byte) 25,
+                "admin",
                 "admin@mail.ru",
                 roleService.getAllRoles()
         );
         User user_user = new User(
                 "user",
+                "user",
+                (byte) 20,
                 "user",
                 "user@icloud.com",
                 Arrays.asList(roleService.getRoleById(2))

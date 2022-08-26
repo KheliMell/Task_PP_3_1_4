@@ -10,15 +10,9 @@ import ru.kata.spring.boot_security.demo.services.dao_services.UserService;
 
 @Controller
 public class UserController {
-    private final UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
-
     @GetMapping("/user")
     public String userInfo(Model model, @AuthenticationPrincipal User user) {
-        model.addAttribute("user", userService.getUserById(user.getId()));
-        return "user";
+        model.addAttribute("user", user);
+        return "user_panel";
     }
 }
