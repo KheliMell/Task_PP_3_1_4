@@ -36,12 +36,6 @@ public class UserDaoImp implements UserDao {
     }
 
     @Override
-    public User findUserByUsername(String username) {
-        TypedQuery<User> query = em.createQuery("from User where username = \'" + username + "\'", User.class);
-        return query.getSingleResult();
-    }
-
-    @Override
     public List<User> getAllUsers() {
         TypedQuery<User> query = em.createQuery("from User", User.class);
         return query.getResultList();
@@ -49,7 +43,7 @@ public class UserDaoImp implements UserDao {
 
     @Override
     public User findUserByEmail(String email) {
-        TypedQuery<User> query = em.createQuery("from User where email = \'" + email + "\'", User.class);
-        return query.getSingleResult();
+        String query = "select user from User user join fetch user.roles where user.email = \'" + email + "\'";
+        return em.createQuery(query, User.class).getSingleResult();
     }
 }
