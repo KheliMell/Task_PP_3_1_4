@@ -39,7 +39,7 @@ public class DataInitializer {
                 "user",
                 (byte) 20,
                 "user",
-                "user@icloud.com",
+                "user@mail.ru",
                 Arrays.asList(roleService.getRoleById(2))
         );
         userService.saveUser(user_admin);
